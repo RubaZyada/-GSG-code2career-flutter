@@ -15,9 +15,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-           ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('You clicked the button!')),
-        );
+         showSnackBar(context);
         },
       
         backgroundColor: Color(0xFF53B175),
@@ -80,4 +78,9 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+void showSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('You clicked the button!')),
+  );
 }
