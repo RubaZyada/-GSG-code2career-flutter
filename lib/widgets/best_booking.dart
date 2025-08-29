@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/widgets/rating.dart';
 
+// ignore: must_be_immutable
 class BestBooking extends StatelessWidget {
   BestBooking({super.key});
 List<String> images = [
