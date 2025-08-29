@@ -13,12 +13,22 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
    
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+           ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('You clicked the button!')),
+        );
+        },
+      
+        backgroundColor: Color(0xFF53B175),
+        child: Icon(Icons.home),
+      ),
       appBar: BuildAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 5),
-            Row(
+            R ow(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(width: 12),
