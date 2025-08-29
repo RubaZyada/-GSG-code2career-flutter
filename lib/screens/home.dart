@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 5),
-            R ow(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(width: 12),
