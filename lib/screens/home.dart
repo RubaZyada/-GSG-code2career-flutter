@@ -11,17 +11,15 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         showSnackBar(context);
+          Navigator.pop(context);
         },
-      
-        backgroundColor: Color(0xFF53B175),
+        backgroundColor: Color.fromARGB(255, 157, 160, 158),
         child: Icon(Icons.home),
       ),
-      appBar: BuildAppBar(),
+      appBar: BuildAppBar(), 
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -71,7 +69,7 @@ class Home extends StatelessWidget {
             SectionHeader(sectionTitle: 'Top Services'),
             TopServices(),
             SizedBox(height: 10),
-             SectionHeader(sectionTitle: 'Best booking'),
+            SectionHeader(sectionTitle: 'Best booking'),
             BestBooking(),
           ],
         ),
@@ -79,8 +77,9 @@ class Home extends StatelessWidget {
     );
   }
 }
+
 void showSnackBar(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('You clicked the button!')),
-  );
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text('Home button pressed')));
 }
