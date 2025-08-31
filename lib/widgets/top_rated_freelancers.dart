@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/models/model.dart';
+import 'package:gsg_flutter/models/freelancers_model.dart';
 import 'package:gsg_flutter/widgets/rating.dart';
 
 class TopRatedFreelancers extends StatefulWidget {

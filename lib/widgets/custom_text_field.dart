@@ -21,11 +21,9 @@ class CustomTextField extends StatelessWidget {
                 controller: cont,
                 obscureText: isPassword,
                 decoration: InputDecoration(
-                  
                   hintText: hintText,
                   prefixIcon: Icon(prefixIcon),
                   border: OutlineInputBorder(
-                    
                    // borderRadius: BorderRadius.circular(16),
                   ),
                 ),

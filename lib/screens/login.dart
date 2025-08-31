@@ -11,45 +11,54 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Login'), backgroundColor: Color(0xFFB2BACD)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              "https://cdn-icons-png.freepik.com/512/295/295128.png",
-              height: 200,
-            ),
-            SizedBox(height: 10),
-            CustomTextField(
-              hintText: "Email",
-              prefixIcon: Icons.email,
-              cont: emailController,
-            ),
-            SizedBox(height: 10),
-            CustomTextField(
-              hintText: "Password",
-              prefixIcon: Icons.lock,
-              isPassword: true,
-              cont: passwordController,
-            ),
-            SizedBox(height: 10),
-
-            ElevatedButton(
-              onPressed: () {
-                _login(context);
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(
-                //     content: Text(
-                //       '${emailController.text}, ${passwordController.text}',
-                //     ),
-                //   ),
-                // );
-                emailController.clear();
-                passwordController.clear();
-              },
-              child: Text('Login'),
-            ),
-          ],
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/login1.jpg",
+                height: 200,
+              ),
+              SizedBox(height: 10),
+              CustomTextField(
+                hintText: "Email",
+                prefixIcon: Icons.email,
+                cont: emailController,
+              ),
+             
+              CustomTextField(
+                hintText: "Password",
+                prefixIcon: Icons.lock,
+                isPassword: true,
+                cont: passwordController,
+              ),
+              SizedBox(height: 10),
+        
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                // minimumSize: const Size(120, 40),
+                  backgroundColor: Color(0xFFB2BACD),
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  textStyle: TextStyle(fontSize: 20, ),
+                ),
+                onPressed: () {
+                  _login(context);
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     content: Text(
+                  //       '${emailController.text}, ${passwordController.text}',
+                  //     ),
+                  //   ),
+                  // );
+                  emailController.clear();
+                  passwordController.clear();
+                },
+                child: Text('Login',style: TextStyle(color: Colors.white),),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -65,10 +74,18 @@ class Login extends StatelessWidget {
         context,
       ).showSnackBar(SnackBar(content: Text('enter valid value')));
     } else {
+      if
+      (email.contains("@") && email.contains(".")&& password.length>=6)
+       {
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(builder: (context) => Home()),
       );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('enter valid email and password')),
+        );
+      }
     }
   }
 }
