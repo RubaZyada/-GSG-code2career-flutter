@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/signup.dart';
@@ -6,8 +6,10 @@ import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,31 +18,39 @@ class Login extends StatelessWidget {
       body: Container(
         color: Colors.white,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/login1.jpg",
-                height: 200,
-              ),
-              SizedBox(height: 10),
-              
-              CustomTextField(
-                hintText: "Email",
-                prefixIcon: Icons.email,
-                cont: emailController,
-              ),
-             
-              CustomTextField(
-                hintText: "Password",
-                prefixIcon: Icons.lock,
-                suffixIcon: Icons.remove_red_eye,
-                isPassword: true,
-                cont: passwordController,
-              ),
-              
-              SizedBox(height: 10),
-        TextButton(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/login1.jpg", height: 200),
+                SizedBox(height: 10),
+
+                CustomTextField(
+                  hintText: "Email",
+                  prefixIcon: Icons.email,
+                  cont: emailController,
+                  validat: (email) {
+                    if (email!.contains("@") && email.contains("."))
+                      return null;
+                    return 'Please enter a valid email';
+                  },
+                ),
+
+                CustomTextField(
+                  hintText: "Password",
+                  prefixIcon: Icons.lock,
+                  suffixIcon: Icons.remove_red_eye,
+                  isPassword: true,
+                  cont: passwordController,
+                  validat: (password) {
+                    if (password!.length >= 8) return null;
+                    return 'Please enter at least 8 characters';
+                  },
+                ),
+
+                SizedBox(height: 10),
+                TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
@@ -52,29 +62,30 @@ class Login extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                 SizedBox(height: 10),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                // minimumSize: const Size(120, 40),
-                  backgroundColor: Color(0xFFB2BACD),
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(fontSize: 20, ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    // minimumSize: const Size(120, 40),
+                    backgroundColor: Color(0xFFB2BACD),
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    textStyle: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    _login(context);
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text(
+                    //       '${emailController.text}, ${passwordController.text}',
+                    //     ),
+                    //   ),
+                    // );
+                    // emailController.clear();
+                    // passwordController.clear();
+                  },
+                  child: Text('Login', style: TextStyle(color: Colors.white)),
                 ),
-                onPressed: () {
-                  _login(context);
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(
-                  //     content: Text(
-                  //       '${emailController.text}, ${passwordController.text}',
-                  //     ),
-                  //   ),
-                  // );
-                  emailController.clear();
-                  passwordController.clear();
-                },
-                child: Text('Login',style: TextStyle(color: Colors.white),),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -82,27 +93,18 @@ class Login extends StatelessWidget {
   }
 
   _login(BuildContext context) {
-    var email = emailController.text;
-    var password = passwordController.text;
-    emailController.clear();
-    passwordController.clear();
-    if (email.isEmpty || password.isEmpty) {
-      return ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('enter valid value')));
-    } else {
-      if
-      (email.contains("@") && email.contains(".")&& password.length>=6)
-       {
+    if (_formKey.currentState!.validate()) {
+      // If the form is valid, proceed with the login
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
       );
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('enter valid email and password')),
-        );
-      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fix the errors in red before submitting.'),
+        ),
+      );
     }
   }
 }

@@ -6,12 +6,14 @@ class CustomTextField extends StatelessWidget {
   final IconData ?suffixIcon;
   final bool isPassword;
   final TextEditingController cont;
-  const CustomTextField({
+  String? Function(String?)? validat;
+   CustomTextField({
     super.key,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.isPassword = false,
+    this.validat,
     required this.cont,
   });
 
@@ -19,7 +21,8 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 10),
-              child: TextField(
+              child: TextFormField(
+                validator:validat,
                 controller: cont,
                 obscureText: isPassword,
                 decoration: InputDecoration(
