@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/screens/home.dart';
+import 'package:gsg_flutter/screens/signup.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +24,7 @@ class Login extends StatelessWidget {
                 height: 200,
               ),
               SizedBox(height: 10),
+              
               CustomTextField(
                 hintText: "Email",
                 prefixIcon: Icons.email,
@@ -31,11 +34,25 @@ class Login extends StatelessWidget {
               CustomTextField(
                 hintText: "Password",
                 prefixIcon: Icons.lock,
+                suffixIcon: Icons.remove_red_eye,
                 isPassword: true,
                 cont: passwordController,
               ),
+              
               SizedBox(height: 10),
-        
+        TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Signup()),
+                    );
+                  },
+                  child: Text(
+                    "You dont have account ?",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                 SizedBox(height: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                 // minimumSize: const Size(120, 40),
@@ -79,7 +96,7 @@ class Login extends StatelessWidget {
        {
       Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => Home()),
       );
       }else{
         ScaffoldMessenger.of(context).showSnackBar(

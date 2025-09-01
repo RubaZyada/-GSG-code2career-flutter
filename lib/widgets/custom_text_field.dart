@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String ?hintText;
   final IconData ?prefixIcon;
+  final IconData ?suffixIcon;
   final bool isPassword;
   final TextEditingController cont;
   const CustomTextField({
     super.key,
     this.hintText,
     this.prefixIcon,
+    this.suffixIcon,
     this.isPassword = false,
     required this.cont,
   });
@@ -23,6 +25,7 @@ class CustomTextField extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: hintText,
                   prefixIcon: Icon(prefixIcon),
+                  suffixIcon: Icon(suffixIcon),
                   border: OutlineInputBorder(
                    // borderRadius: BorderRadius.circular(16),
                   ),

@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
         backgroundColor: Color.fromARGB(255, 157, 160, 158),
         child: Icon(Icons.home),
       ),
-      appBar: BuildAppBar(), 
+      appBar: BuildAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,6 +73,14 @@ class Home extends StatelessWidget {
             BestBooking(),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+        ],
       ),
     );
   }
