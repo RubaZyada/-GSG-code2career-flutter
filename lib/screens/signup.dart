@@ -104,7 +104,9 @@ class Signup extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     textStyle: TextStyle(fontSize: 20),
                   ),
-                  onPressed: (_signup(context)),
+                  onPressed: () {
+                    _signup(context);
+                  },
                   child: Text('Signup', style: TextStyle(color: Colors.white)),
                 ),
               ],
