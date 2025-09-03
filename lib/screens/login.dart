@@ -49,9 +49,9 @@ class Login extends StatelessWidget {
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.pushReplacementNamed(
                       context,
-                      MaterialPageRoute(builder: (context) => Signup()),
+                      Routes.signup,
                     );
                   },
                   child: Text(
@@ -96,6 +96,7 @@ class Login extends StatelessWidget {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          backgroundColor: Colors.red,
           content: Text('Please fix the errors in red before submitting.'),
         ),
       );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_flutter/routes.dart';
 
 class BuildAppBar extends StatelessWidget implements PreferredSizeWidget{
   const BuildAppBar({super.key});
@@ -33,6 +34,13 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget{
               onPressed: () {},
               icon: Icon(Icons.shopping_cart_outlined),
             ),
+          ),
+            SizedBox(width: 10),
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, Routes.login);
+            },
+            icon: Icon(Icons.logout),
           ),
           SizedBox(width: 20),
         ],

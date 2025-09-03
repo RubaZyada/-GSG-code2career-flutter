@@ -27,6 +27,7 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text("hello "),
                 SizedBox(width: 12),
                 Expanded(
                   child: TextField(
