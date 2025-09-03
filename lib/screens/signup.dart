@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/screens/home.dart';
+import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/login.dart';
-//import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Signup extends StatelessWidget {
@@ -120,10 +119,7 @@ class Signup extends StatelessWidget {
   _signup(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       // If the form is valid, proceed with the login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+      Navigator.pushReplacementNamed(context, Routes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

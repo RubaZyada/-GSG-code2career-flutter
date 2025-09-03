@@ -1,12 +1,12 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/signup.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -25,7 +25,6 @@ class Login extends StatelessWidget {
               children: [
                 Image.asset("assets/images/login1.jpg", height: 200),
                 SizedBox(height: 10),
-
                 CustomTextField(
                   hintText: "Email",
                   prefixIcon: Icons.email,
@@ -36,7 +35,6 @@ class Login extends StatelessWidget {
                     return 'Please enter a valid email';
                   },
                 ),
-
                 CustomTextField(
                   hintText: "Password",
                   prefixIcon: Icons.lock,
@@ -48,7 +46,6 @@ class Login extends StatelessWidget {
                     return 'Please enter at least 8 characters';
                   },
                 ),
-
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
@@ -95,10 +92,7 @@ class Login extends StatelessWidget {
   _login(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       // If the form is valid, proceed with the login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+      Navigator.pushReplacementNamed(context, Routes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
