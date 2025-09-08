@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class Users {
+class FreelancersModel {
   String imageUrl;
   String name;
   String job;
   double rate;
-  Users({
+  FreelancersModel({
     required this.imageUrl,
     required this.name,
     required this.job,

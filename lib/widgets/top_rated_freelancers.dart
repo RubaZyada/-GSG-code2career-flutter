@@ -16,26 +16,26 @@ class TopRatedFreelancers extends StatefulWidget {
 }
 
 class _TopRatedFreelancersState extends State<TopRatedFreelancers> {
-  List<Users> users = [
-    Users(
+  List<FreelancersModel> Freelances = [
+    FreelancersModel(
       imageUrl: "assets/images/models/model1.png",
       name: "John Doe",
       job: "Web Developer",
       rate: 4.5,
     ),
-    Users(
+    FreelancersModel(
       imageUrl: "assets/images/models/model2.png",
       name: "John Doe",
       job: "Web Developer",
       rate: 4.5,
     ),
-    Users(
+    FreelancersModel(
       imageUrl: "assets/images/models/model3.png",
       name: "Jane Smith",
       job: "Graphic Designer",
       rate: 4.7,
     ),
-    Users(
+    FreelancersModel(
       imageUrl: "assets/images/models/model4.png",
       name: "Mike Johnson",
       job: "UI/UX Designer",
@@ -48,8 +48,8 @@ class _TopRatedFreelancersState extends State<TopRatedFreelancers> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          ...List.generate(users.length, (index) {
-            final user = users[index];
+          ...List.generate(Freelances.length, (index) {
+            final freelancers = Freelances[index];
             return Container(
               margin: EdgeInsets.only(left: 5),
               height: 140,
@@ -57,7 +57,7 @@ class _TopRatedFreelancersState extends State<TopRatedFreelancers> {
               child: Stack(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(user.imageUrl),
+                    backgroundImage: AssetImage(freelancers.imageUrl),
                     radius: 40,
                   ),
                   Positioned(
@@ -82,14 +82,14 @@ class _TopRatedFreelancersState extends State<TopRatedFreelancers> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            user.name,
+                            freelancers.name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                             ),
                           ),
-                          Text(user.job, style: TextStyle(fontSize: 12)),
-                          Rating(rate: user.rate)
+                          Text(freelancers.job, style: TextStyle(fontSize: 12)),
+                          Rating(rate: freelancers.rate)
                         ],
                       ),
                     ),
