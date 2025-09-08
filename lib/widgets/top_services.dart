@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/widgets/rating.dart';
-import 'package:gsg_flutter/models/service_model.dart';
+import 'package:gsg_flutter/data/service_model.dart';
 
 class TopServices extends StatelessWidget {
   TopServices({super.key});

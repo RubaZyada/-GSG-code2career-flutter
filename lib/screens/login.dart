@@ -1,8 +1,6 @@
-//import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/screens/home.dart';
-import 'package:gsg_flutter/screens/signup.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Login extends StatelessWidget {

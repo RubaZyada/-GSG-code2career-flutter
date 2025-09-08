@@ -1,9 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/models/freelancers_model.dart';
+
+import 'package:gsg_flutter/data/freelancers_model.dart';
 import 'package:gsg_flutter/widgets/rating.dart';
 
 class TopRatedFreelancers extends StatefulWidget {
-  const TopRatedFreelancers({super.key});
+  const TopRatedFreelancers({
+    super.key,
+   // required this.model,
+  });
+//  final Users model;
 
   @override
   State<TopRatedFreelancers> createState() => _TopRatedFreelancersState();

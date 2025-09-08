@@ -8,7 +8,7 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        leading: Icon(Icons.menu),
+       // leading: Icon(Icons.menu),
         title: Image.asset(
           "assets/images/logo-79.png",
           width: 100,
