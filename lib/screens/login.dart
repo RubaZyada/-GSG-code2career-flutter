@@ -1,13 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +55,7 @@ class Login extends StatelessWidget {
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      Routes.signup,
-                    );
+                    Navigator.pushReplacementNamed(context, Routes.signup);
                   },
                   child: Text(
                     "You dont have account ?",
@@ -60,24 +65,16 @@ class Login extends StatelessWidget {
                 SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    // minimumSize: const Size(120, 40),
                     backgroundColor: Color(0xFFB2BACD),
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     textStyle: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
                     _login(context);
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: Text(
-                    //       '${emailController.text}, ${passwordController.text}',
-                    //     ),
-                    //   ),
-                    // );
-                    // emailController.clear();
-                    // passwordController.clear();
                   },
-                  child: Text('Login', style: TextStyle(color: Colors.white)),
+                  child: isLoading
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : Text('Login', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
@@ -87,7 +84,14 @@ class Login extends StatelessWidget {
     );
   }
 
-  _login(BuildContext context) {
+  _login(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
     if (_formKey.currentState!.validate()) {
       // If the form is valid, proceed with the login
       Navigator.pushReplacementNamed(context, Routes.home);
