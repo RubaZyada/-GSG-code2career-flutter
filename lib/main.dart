@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         Routes.main: (context) => MainApp(),
         Routes.freelancerDetails: (context) => FreelancerDetails(),
       },
-      home: MainApp(),
+      home: Login(),
     
     );
     
