@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/products/all_products.dart';
+import 'package:gsg_flutter/products/main_nav_screen.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/freelanser_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
         Routes.signup: (context) => Signup(),
         Routes.main: (context) => MainApp(),
         Routes.freelancerDetails: (context) => FreelancerDetails(),
-        Routes.allProducts: (context) => AllProducts(),
+        Routes.mainNavScreen: (context) => MainNavScreen(),
       },
-     home: AllProducts(),
+     home: MainNavScreen(),
     
     );
     
