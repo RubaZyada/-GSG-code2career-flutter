@@ -13,9 +13,12 @@ class AllProducts extends StatefulWidget {
 }
 
 class _MainAppState extends State<AllProducts> {
+  int index = 0;
+  List<Widget> screens = [Text("Home"), Text("cart"), Text("settings")];
 
   List<ProductModel> products = [];
-
+  bool loading = true;
+  String? error;
   @override
   void initState() {
     super.initState();
@@ -36,41 +39,55 @@ class _MainAppState extends State<AllProducts> {
         ],
       ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return ProductWidget(model: products[index]);
-          },
-          itemCount: products.length,
-        ),
+        child: loading
+            ? CircularProgressIndicator()
+            : ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ProductWidget(model: product);
+                },
+              ),
       ),
-
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+            activeIcon: Icon(Icons.home_filled),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shop_2_outlined),
+            label: "Cart",
+            activeIcon: Icon(Icons.shop_2),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
+            activeIcon: Icon(Icons.settings_cell_outlined),
+          ),
+        ],
+      ),
     );
   }
 
-  fetchData() async {
-    var response = await http.get(
-      Uri.parse('https://fakestoreapi.com/products'),
-    );
-    log(response.body); // json(string)
-    var data = jsonDecode(response.body); // decoding
-    // [{}] -> [ model ]
-    for (Map map in data) {
-      ProductModel model = ProductModel.fromJson(map);
-      setState(() {
-        products.add(model);
-      });
-    }
-  }
-}
-/**Future<void> fetchData() async {
+  Future<void> fetchData() async {
     try {
-      final res = await http.get(Uri.parse('https://fakestoreapi.com/products'));
+      final res = await http.get(
+        Uri.parse('https://fakestoreapi.com/products'),
+      );
       if (res.statusCode != 200) {
         throw Exception('HTTP ${res.statusCode}');
       }
 
       final List<dynamic> data = jsonDecode(res.body);
-      log('items: ${data.length}');               
+      log('items: ${data.length}');
 
       final list = data
           .map((e) => ProductModel.fromJson(Map<String, dynamic>.from(e)))
@@ -78,7 +95,7 @@ class _MainAppState extends State<AllProducts> {
 
       if (!mounted) return;
       setState(() {
-        products = list;                          
+        products = list;
         loading = false;
       });
     } catch (e) {
@@ -90,4 +107,3 @@ class _MainAppState extends State<AllProducts> {
     }
   }
 }
- */

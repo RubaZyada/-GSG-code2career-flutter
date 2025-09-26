@@ -7,23 +7,28 @@ class ProductWidget extends StatelessWidget {
   final ProductModel model;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-     onTap: () {
+    return InkWell(
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ProductDetails(model: model)),
         );
       },
-      leading: CircleAvatar(backgroundImage: NetworkImage(model.image),radius: 40,),
-      title: Text(model.title),
-      subtitle: Row(
-        children: [
-          Text(model.rating.toString()),
-          Icon(Icons.star, color: Colors.amber, size: 16),
-          Text('(${model.ratingCount.toString()})'),
-        ],
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(model.image),
+          radius: 40,
+        ),
+        title: Text(model.title),
+        subtitle: Row(
+          children: [
+            Text(model.rating.toString()),
+            Icon(Icons.star, color: Colors.amber, size: 16),
+            Text('(${model.ratingCount.toString()})'),
+          ],
+        ),
+        trailing: Text('\$${model.price.toString()}'),
       ),
-      trailing: Text('\$${model.price.toString()}'),
     );
   }
 }
