@@ -18,6 +18,7 @@ class _MainAppState extends State<AllProducts> {
 
   @override
   void initState() {
+    super.initState();
     fetchData();
   }
 

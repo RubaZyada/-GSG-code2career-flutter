@@ -5,7 +5,7 @@ import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/screens/main_app.dart';
 import 'package:gsg_flutter/screens/signup.dart';
-import 'package:gsg_flutter/products/product_details.dart';
+//import 'package:gsg_flutter/products/product_details.dart';
 //import 'package:gsg_flutter/screens/signup.dart';
 //import 'package:gsg_flutter/screens/main_app.dart';
 
