@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/product_model.dart';
+import 'package:gsg_flutter/products/product_details.dart';
 
-class Prouduct extends StatelessWidget {
-  const Prouduct({super.key, required this.model});
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({super.key, required this.model});
   final ProductModel model;
   @override
   Widget build(BuildContext context) {
     return ListTile(
+     onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetails(model: model)),
+        );
+      },
       leading: CircleAvatar(backgroundImage: NetworkImage(model.image),radius: 40,),
       title: Text(model.title),
       subtitle: Row(

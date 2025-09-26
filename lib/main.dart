@@ -5,8 +5,10 @@ import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/screens/main_app.dart';
 import 'package:gsg_flutter/screens/signup.dart';
+import 'package:gsg_flutter/products/product_details.dart';
 //import 'package:gsg_flutter/screens/signup.dart';
 //import 'package:gsg_flutter/screens/main_app.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +26,9 @@ class MyApp extends StatelessWidget {
         Routes.signup: (context) => Signup(),
         Routes.main: (context) => MainApp(),
         Routes.freelancerDetails: (context) => FreelancerDetails(),
+       
       },
-      home: Login(),
+   //   home: Product(),
     
     );
     

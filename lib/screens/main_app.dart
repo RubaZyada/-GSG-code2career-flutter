@@ -1,10 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:gsg_flutter/data/product_model.dart';
-import 'package:gsg_flutter/widgets/prouduct.dart';
+import 'package:gsg_flutter/products/product_widget.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -18,13 +16,6 @@ class _MainAppState extends State<MainApp> {
   List<ProductModel> products = [];
   bool loading = true;
   String? error;
-
-  @override
-  void initState() {
-    super.initState();           // <-- important
-    fetchData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +26,7 @@ class _MainAppState extends State<MainApp> {
                 ? Text(error!)
                 : ListView.builder(
                     itemCount: products.length,
-                    itemBuilder: (context, i) => Prouduct(model: products[i]),
+                    itemBuilder: (context, i) => ProductWidget(model: products[i]),
                   ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -55,31 +46,5 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
-  Future<void> fetchData() async {
-    try {
-      final res = await http.get(Uri.parse('https://fakestoreapi.com/products'));
-      if (res.statusCode != 200) {
-        throw Exception('HTTP ${res.statusCode}');
-      }
 
-      final List<dynamic> data = jsonDecode(res.body);
-      log('items: ${data.length}');               
-
-      final list = data
-          .map((e) => ProductModel.fromJson(Map<String, dynamic>.from(e)))
-          .toList();
-
-      if (!mounted) return;
-      setState(() {
-        products = list;                          
-        loading = false;
-      });
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        error = 'Failed to load products: $e';
-        loading = false;
-      });
-    }
-  }
 }
