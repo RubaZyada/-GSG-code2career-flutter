@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/products/all_products.dart';
-
+import 'package:gsg_flutter/screens/books.dart';
 
 class MainNavScreen extends StatefulWidget {
   MainNavScreen({super.key});
@@ -11,24 +11,12 @@ class MainNavScreen extends StatefulWidget {
 
 class _MainAppState extends State<MainNavScreen> {
   int index = 0;
-  List<Widget> screens = [AllProducts(), Text("cart"), Text("settings")];
+  List<Widget> screens = [AllProducts(), Books(), Text("settings")];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('All Products'),
-        backgroundColor: Colors.amber,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Icon(Icons.shopping_cart),
-          ),
-        ],
-      ),
-      body: Center(
-        child: screens[index]
-      ),
+      body: Center(child: screens[index]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (value) {
@@ -43,9 +31,9 @@ class _MainAppState extends State<MainNavScreen> {
             activeIcon: Icon(Icons.home_filled),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shop_2_outlined),
-            label: "Cart",
-            activeIcon: Icon(Icons.shop_2),
+            icon: Icon(Icons.menu_book_outlined),
+            label: "books",
+            activeIcon: Icon(Icons.menu_book_sharp),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -56,5 +44,4 @@ class _MainAppState extends State<MainNavScreen> {
       ),
     );
   }
-
 }
