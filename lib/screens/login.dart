@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
+import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
-
+  static const String userCredentialKey = 'usercredential';
   @override
   State<Login> createState() => _LoginState();
 }
@@ -36,8 +38,9 @@ class _LoginState extends State<Login> {
                   prefixIcon: Icons.email,
                   cont: emailController,
                   validat: (email) {
-                    if (email!.contains("@") && email.contains("."))
+                    if (email!.contains("@") && email.contains(".")) {
                       return null;
+                    }
                     return 'Please enter a valid email';
                   },
                 ),
@@ -93,9 +96,12 @@ class _LoginState extends State<Login> {
       isLoading = false;
     });
     if (_formKey.currentState!.validate()) {
+     await loginUser(emailController.text);
       // If the form is valid, proceed with the login
-      Navigator.pushReplacementNamed(context, Routes.home);
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(name: emailController.text)));
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
@@ -103,5 +109,10 @@ class _LoginState extends State<Login> {
         ),
       );
     }
+  }
+  ///1-
+  loginUser(String email)async{
+    final prefs = await SharedPreferences.getInstance();
+     prefs.setString(Login.userCredentialKey, email);
   }
 }

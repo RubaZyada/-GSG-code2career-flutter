@@ -7,8 +7,8 @@ import 'package:gsg_flutter/widgets/top_rated_freelancers.dart';
 import 'package:gsg_flutter/widgets/top_services.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
-
+  const Home({super.key, this.name});
+  final String? name;
   @override
   State<Home> createState() => _HomeState();
 }
@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   int index=0;
   @override
   Widget build(BuildContext context) {
-    final String? name = ModalRoute.of(context)!.settings.arguments as String?;
+   
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Align(alignment: Alignment.centerLeft, child: Text("hello ${name ?? 'Guest'}")),
+            Align(alignment: Alignment.centerLeft, child: Text("hello ${widget.name ?? 'Guest'}")),
             SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
