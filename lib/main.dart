@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/products/main_nav_screen.dart';
 import 'package:gsg_flutter/routes.dart';
+import 'package:gsg_flutter/screens/counter.dart';
 import 'package:gsg_flutter/screens/freelanser_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         Routes.freelancerDetails: (context) => FreelancerDetails(),
         Routes.mainNavScreen: (context) => MainNavScreen(),
       },
-     home: MainNavScreen(),
+     home: CounterScreen(),
     
     );
     

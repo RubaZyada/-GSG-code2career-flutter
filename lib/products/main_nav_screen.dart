@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/products/all_products.dart';
-import 'package:gsg_flutter/screens/books.dart';
+
 
 class MainNavScreen extends StatefulWidget {
   MainNavScreen({super.key});
@@ -11,7 +11,7 @@ class MainNavScreen extends StatefulWidget {
 
 class _MainAppState extends State<MainNavScreen> {
   int index = 0;
-  List<Widget> screens = [AllProducts(), Books(), Text("settings")];
+  List<Widget> screens = [AllProducts(), Text("settings"), Text("settings")];
 
   @override
   Widget build(BuildContext context) {
