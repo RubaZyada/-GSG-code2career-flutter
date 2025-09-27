@@ -19,28 +19,8 @@ void main() async{
   final prefs= await SharedPreferences.getInstance();
   String ? userEmail = prefs.getString(Login.userCredentialKey);
  
- runApp(const MyApp());
-//  runApp(MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       routes: {
-//         Routes.login: (context) => Login(),
-//         Routes.home: (context) => Home(),
-//         Routes.signup: (context) => Signup(),
-//         Routes.main: (context) => MainApp(),
-//         Routes.freelancerDetails: (context) => FreelancerDetails(),
-//         Routes.mainNavScreen: (context) => MainNavScreen(),
-//       },
-//       //shared preferences
-//      home: userEmail != null ? Home(name: userEmail,) : Login(),
-    
-//     ));
-}
-class MyApp extends StatelessWidget {
-  
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+ //runApp(const MyApp());
+ runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
         Routes.login: (context) => Login(),
@@ -50,9 +30,28 @@ class MyApp extends StatelessWidget {
         Routes.freelancerDetails: (context) => FreelancerDetails(),
         Routes.mainNavScreen: (context) => MainNavScreen(),
       },
-    // home: userEmail!= null ? Home(name: userEmail,) : Login(),  
-    );
+      //shared preferences
+     home: userEmail != null ? Home(name: userEmail,) : Login(),
     
-  }
+    ));
 }
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       routes: {
+//         Routes.login: (context) => Login(),
+//         Routes.home: (context) => Home(),
+//         Routes.signup: (context) => Signup(),
+//         Routes.main: (context) => MainApp(),
+//         Routes.freelancerDetails: (context) => FreelancerDetails(),
+//         Routes.mainNavScreen: (context) => MainNavScreen(),
+//       },
+//     home: userEmail!= null ? Home(name: userEmail,) : Login(),  
+//     );
+    
+//   }
+// }
 
