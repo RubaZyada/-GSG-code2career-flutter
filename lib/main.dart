@@ -13,14 +13,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:gsg_flutter/screens/signup.dart';
 //import 'package:gsg_flutter/screens/main_app.dart';
 
-
-void main() async{
+void main() async {
   // استدعي هدا السطر عشان ال async in main
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs= await SharedPreferences.getInstance();
-  String ? userEmail = prefs.getString(Login.userCredentialKey);
- //runApp(const MyApp());
- runApp(MaterialApp(
+  final prefs = await SharedPreferences.getInstance();
+  String? userEmail = prefs.getString(Login.userCredentialKey);
+  //runApp(const MyApp());
+  runApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
         Routes.login: (context) => Login(),
@@ -31,10 +31,15 @@ void main() async{
         Routes.mainNavScreen: (context) => MainNavScreen(),
       },
       //shared preferences
-    // home: userEmail != null ? Home(name: userEmail,) : Login(),
-  //note screen
-   home: userEmail != null ? NotesScreen() : Login(),
-    ));
+      // home: userEmail != null ? Home(name: userEmail,) : Login(),
+      //note screen
+      home: userEmail != null ? NotesScreen() : Login(),
+      //counter screen
+      //home: CounterScreen(),
+      //product  screen
+      //home: AllProducts(),
+    ),
+  );
 }
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});

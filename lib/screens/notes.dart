@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_flutter/data/notes_model.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,15 +11,21 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  List<String> notes = [];
+ // List<NotesModel> notes = [];
+   List<String> notes = [];
   final String noteskey = 'notes';
+  // بدون نعمل مودل
   TextEditingController noteController = TextEditingController();
+//   TextEditingController titleController = TextEditingController();
+//   TextEditingController contentController = TextEditingController();
+
   @override
-    void initState() {
-        super.initState();
-        fetchList();
-    }
-     @override
+  void initState() {
+    super.initState();
+    fetchList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Notes')),
@@ -44,20 +51,41 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
+                     
                     TextField(
-                      controller: noteController,
+                         controller: noteController,
                       decoration: const InputDecoration(
                         hintText: 'Enter your note',
                         prefixIcon: Icon(Icons.note),
                         border: OutlineInputBorder(),
                       ),
                     ),
+                    // CustomTextField(
+                    //   cont: titleController,
+                    //   hintText: 'Enter your title',
+                    // ),
+
+                    // CustomTextField(
+                    //   cont: contentController,
+                    //   hintText: 'Enter your content',
+                    // ),
+
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          notes.add(noteController.text);
-                          noteController.clear();
+                        //   NotesModel note = NotesModel(
+                        //     title: titleController.text,
+                        //     content: contentController.text,
+                        //     date:
+                        //         "${DateTime.now().day} ${DateTime.now().month}",
+                        //   );
+                        //   notes.add(note);
+                        //   contentController.clear();
+                        //   titleController.clear();
+                          
+                              notes.add(noteController.text);
+                             noteController.clear();
                         });
                         updateList();
                         Navigator.pop(context);
@@ -70,7 +98,6 @@ class _NotesScreenState extends State<NotesScreen> {
             },
           );
         },
-
         child: const Icon(Icons.add),
       ),
       body: notes.isEmpty
@@ -83,55 +110,115 @@ class _NotesScreenState extends State<NotesScreen> {
           : ListView.builder(
               itemCount: notes.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
+                return Dismissible(
+                  background: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(color: Colors.red),
                   ),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 6,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(Icons.note, color: Colors.blueAccent),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          notes[index],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    setState(() {
+                      notes.removeAt(index);
+                    });
+                    updateList();
+                    if (notes.isEmpty) {
+                      setState(() {
+                        // Show a message or perform an action when the notes list is empty
+                      });
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Note deleted'),
+                        action: SnackBarAction(
+                          label: 'UNDO',
+                          onPressed: () {
+                            setState(() {
+                              notes.insert(index, notes[index]);
+                            });
+                            updateList();
+                          },
                         ),
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                   child: Row( crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [ const Icon(Icons.note, color: Colors.blueAccent)
+                    , const SizedBox(width: 12),
+                     Expanded( 
+                        child: Text( notes[index],
+                         style: const TextStyle( fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                           color: Colors.black87, ), ), ),]
+                    // child: ListTile(
+                    //   title: Text(
+                    //     notes[index].title,
+                    //     style: const TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w500,
+                    //     ),
+                    //   ),
+                    //   subtitle: Text(
+                    //     notes[index].content,
+                    //     style: const TextStyle(
+                    //       fontSize: 14,
+                    //       color: Colors.grey,
+                    //     ),
+                    //   ),
+                    //   trailing: Text(notes[index].date),
+                    // ),
                   ),
+                  )
                 );
               },
             ),
     );
   }
-  updateList()async{
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(noteskey, notes);
-  }
-  fetchList()async{
-    final prefs = await SharedPreferences.getInstance();
+  // لما بدي اسنخدمهم ارجع الnote list to string type not notemodel
+
+    updateList() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setStringList(noteskey, notes);
+    }
+
+    fetchList() async {
+  final prefs = await SharedPreferences.getInstance();
   setState(() {
-     notes = prefs.getStringList(noteskey) ?? [];
+    notes = prefs.getStringList(noteskey) ?? [];
   });
-  }
+    }
+
+  //note model
+   //  updateList() async {
+  // final prefs = await SharedPreferences.getInstance();
+  // prefs.setStringList(noteskey, notes);
+   //  }
+
+   //  fetchList() async {
+  // final prefs = await SharedPreferences.getInstance();
+  // setState(() {
+  //   notes = prefs.getStringList(noteskey) ?? [];
+  // });
+ //    }
 }
-
-
