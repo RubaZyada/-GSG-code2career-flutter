@@ -6,7 +6,7 @@ import 'package:gsg_flutter/screens/freelanser_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/screens/main_app.dart';
-import 'package:gsg_flutter/screens/notes.dart';
+import 'package:gsg_flutter/todo/presentaion/screens/notes.dart';
 import 'package:gsg_flutter/screens/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:gsg_flutter/products/product_details.dart';
@@ -33,7 +33,8 @@ void main() async {
       //shared preferences
       // home: userEmail != null ? Home(name: userEmail,) : Login(),
       //note screen
-      home: userEmail != null ? NotesScreen() : Login(),
+    //  home: userEmail != null ? NotesScreen() : Login(),
+      home: NotesScreen(),
       //counter screen
       //home: CounterScreen(),
       //product  screen

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/data/notes_model.dart';
+import 'package:gsg_flutter/todo/data/notes_model.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
+import 'package:gsg_flutter/todo/presentaion/widgets/note_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesScreen extends StatefulWidget {
@@ -14,7 +17,6 @@ class _NotesScreenState extends State<NotesScreen> {
   List<NotesModel> notes = [];
 
   final String noteskey = 'notes';
-  // بدون نعمل مودل
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -98,17 +100,8 @@ class _NotesScreenState extends State<NotesScreen> {
           : ListView.builder(
               itemCount: notes.length,
               itemBuilder: (context, index) {
-                return Dismissible(
-                  background: Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(color: Colors.red),
-                  ),
-                  key: UniqueKey(),
+                return NoteWidget(
+                  note: notes[index],
                   onDismissed: (direction) {
                     setState(() {
                       notes.removeAt(index);
@@ -134,42 +127,6 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                     );
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-
-                    child: ListTile(
-                      title: Text(
-                        notes[index].title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      subtitle: Text(
-                        notes[index].content,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      trailing: Text(notes[index].date),
-                    ),
-                  ),
                 );
               },
             ),
@@ -178,20 +135,28 @@ class _NotesScreenState extends State<NotesScreen> {
   // لما بدي اسنخدمهم ارجع الnote list to string type not notemodel
 
   updateList() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   prefs.setStringList(noteskey, notes);
+    final prefs = await SharedPreferences.getInstance();
+    List<String> notesAsString = [];
+    for (var note in this.notes) {
+      notesAsString.add(note.toJson());
+    }
+    prefs.setStringList(noteskey, notesAsString);
   }
 
   fetchList() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   setState(() {
-    //     notes = prefs.getStringList(noteskey) ?? [];
+    final prefs = await SharedPreferences.getInstance();
+
+    var notesAsStrings = prefs.getStringList(noteskey) ?? [];
+    for (var n in notesAsStrings) {
+      var noteDecoded = jsonDecode(n);
+      NotesModel note = NotesModel.fromjson(noteDecoded);
+      setState(() {
+        notes.add(note);
+      });
+    }
   }
-}
 
-
-
-/*import 'package:flutter/material.dart';
+  /*import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/notes_model.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -407,15 +372,16 @@ class _NotesScreenState extends State<NotesScreen> {
 }
 
 */
- //note model
-   //  updateList() async {
+  //note model
+  //  updateList() async {
   // final prefs = await SharedPreferences.getInstance();
   // prefs.setStringList(noteskey, notes);
-   //  }
+  //  }
 
-   //  fetchList() async {
+  //  fetchList() async {
   // final prefs = await SharedPreferences.getInstance();
   // setState(() {
   //   notes = prefs.getStringList(noteskey) ?? [];
   // });
- //    }
+  //
+}
