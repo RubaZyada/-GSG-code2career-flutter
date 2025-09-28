@@ -18,7 +18,6 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final prefs= await SharedPreferences.getInstance();
   String ? userEmail = prefs.getString(Login.userCredentialKey);
- 
  //runApp(const MyApp());
  runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -51,7 +50,6 @@ void main() async{
 //       },
 //     home: userEmail!= null ? Home(name: userEmail,) : Login(),  
 //     );
-    
 //   }
 // }
 
