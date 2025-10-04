@@ -1,10 +1,12 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/notes_model.dart';
+import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
+import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:gsg_flutter/todo/presentaion/widgets/note_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -74,10 +76,11 @@ class _NotesScreenState extends State<NotesScreen> {
                                 "${DateTime.now().day} ${DateTime.now().month}",
                           );
                           notes.add(note);
+                          NotesSqliteDb.insertNoteToDb(note);
                           contentController.clear();
                           titleController.clear();
                         });
-                        updateList();
+                       // NotesSharedDb.updateListAtSharedDb(notes);
                         Navigator.pop(context);
                       },
                       child: const Text('Add Note'),
@@ -103,10 +106,11 @@ class _NotesScreenState extends State<NotesScreen> {
                 return NoteWidget(
                   note: notes[index],
                   onDismissed: (direction) {
+                    NotesModel removedNote = notes[index];
                     setState(() {
                       notes.removeAt(index);
                     });
-                    updateList();
+                   // NotesSharedDb.updateListAtSharedDb(notes);
                     if (notes.isEmpty) {
                       setState(() {
                         // Show a message or perform an action when the notes list is empty
@@ -119,9 +123,9 @@ class _NotesScreenState extends State<NotesScreen> {
                           label: 'UNDO',
                           onPressed: () {
                             setState(() {
-                              notes.insert(index, notes[index]);
+                              notes.insert(index, removedNote);
                             });
-                            updateList();
+                           // NotesSharedDb.updateListAtSharedDb(notes);
                           },
                         ),
                       ),
@@ -132,30 +136,48 @@ class _NotesScreenState extends State<NotesScreen> {
             ),
     );
   }
-  // لما بدي اسنخدمهم ارجع الnote list to string type not notemodel
-
-  updateList() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> notesAsString = [];
-    for (var note in this.notes) {
-      notesAsString.add(note.toJson());
-    }
-    prefs.setStringList(noteskey, notesAsString);
-  }
-
+//sqflite 
   fetchList() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    var notesAsStrings = prefs.getStringList(noteskey) ?? [];
-    for (var n in notesAsStrings) {
-      var noteDecoded = jsonDecode(n);
-      NotesModel note = NotesModel.fromjson(noteDecoded);
+    try {
+   
       setState(() {
-        notes.add(note);
+      
       });
+    } catch (e) {
+      print('Error fetching notes: $e');
+    
     }
   }
+  //shared prefs
+  // fetchList() async {
+  //   try {
+  //     var fetchList = await NotesSharedDb.fetchListFromSharedDb();
+  //     setState(() {
+  //       notes = fetchList;
+  //     });
+  //   } catch (e) {
+  //     print('Error fetching notes: $e');
+  //     // Optionally, clear corrupted data
+  //     // NotesSharedDb.prefs.remove(noteskey);
+  //   }
+  // }
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   /*import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/notes_model.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
